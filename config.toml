@@ -1,6 +1,7 @@
 # hugo server --minify --themesDir ... --baseURL=http://0.0.0.0:1313/theme/hugo-book/
 
-baseURL = 'https://zuoye.qsrm.win/'
+#baseURL = 'https://zuoye.qsrm.win/'
+baseURL = 'https://qsrm.win/zuoye/'
 title = '作业 CC201'
 theme = 'book'
 
