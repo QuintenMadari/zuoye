@@ -11,7 +11,9 @@ folderinfo = []
 for foltitle in foldertitles:
 	curfol = '/'+foltitle
 	folcontent = os.listdir(path+curfol)
-	filelinks = [curfol+'/'+name for name in folcontent]
+	sfolcontent = sorted(folcontent)
+	filelinks = [curfol+'/'+name for name in sfolcontent]
+
 	# extract and clean file title from first line of file
 	filetitles = []
 	for flink in filelinks:
@@ -19,8 +21,6 @@ for foltitle in foldertitles:
 		rmspacehash=''.join(firline.split('# '))
 		rmhash=''.join(rmspacehash.split('#'))
 		filetitles.append(rmhash)
-
-
 	linkinfo = []
 	for i in range(len(filelinks)):
 		ln = json.dumps(
