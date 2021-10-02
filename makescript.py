@@ -80,7 +80,7 @@ jscomplete.update(dictB)
 #also clean up the json from errant backslashes and double quotes
 
 docutescript = 'new Docute(XXXXX)'
-docutescript = docutescript.replace('XXXXX',json.dumps(jscomplete).replace('\\"','"').replace('["','[').replace('"]',']'))
+docutescript = docutescript.replace('XXXXX',json.dumps(jscomplete).replace('\\"','"').replace('["','[').replace('"]',']').replace('\\\\u','\\u'))
 print(docutescript)
 
 f = open("script.js", "w")
