@@ -16,8 +16,8 @@ for foltitle in foldertitles:
 	filetitles = []
 	for flink in filelinks:
 		with open(path+flink) as f: firline=f.readline().rstrip()
-		rmspacehash=''.join(firline.split('# '),1)
-		rmhash=''.join(rmspacehash.split('#'),1)
+		rmspacehash=''.join(firline.split('# '))
+		rmhash=''.join(rmspacehash.split('#'))
 		filetitles.append(rmhash)
 
 
