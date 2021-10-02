@@ -77,6 +77,7 @@ jscomplete = dictA.copy()
 jscomplete.update(dictB)
 
 #wrap new docute and write to script.js
+#also clean up the json from errant backslashes and double quotes
 
 docutescript = 'new Docute(XXXXX)'
 docutescript = docutescript.replace('XXXXX',json.dumps(jscomplete).replace('\\"','"').replace('["','[').replace('"]',']'))
@@ -85,39 +86,7 @@ print(docutescript)
 f = open("script.js", "w")
 f.write(docutescript)
 f.close()
-f = open("script.js", "r")
-print(f.read())
-f.close()
 
-### manual template below
-##j1 = json.dumps(
-##	{
-##		'title':'Zuoye',
-##		'target':'#docute',
-##		'theme':'dark',
-##		'darkThemeToggler':'true',
-##		'sourcePath':'./CC201',
-##		'nav':[
-##				{
-##					'title':'Home','link':'/'
-##				},
-##				{
-##					'title':'About','link':'/README2'
-##				}
-##		],
-##		'sidebar': [
-##			{
-##				'title':foldertitles[0],'links':[
-##					{
-##						'title':filetitles[0],'link':filelinks[0]
-##					},
-##					{
-##						'title':filetitles[1],'link':filelinks[1]
-##					}
-##				]
-##			},
-##		]
-##	}
-##)
-##
-##print(json.loads(j1))
+#f = open("script.js", "r")
+#print(f.read())
+#f.close()
