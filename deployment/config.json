@@ -1,0 +1,17 @@
+{
+    "sourcePath":"./CC201",
+    "title":"作业",
+    "target":"#docute",
+    "theme":"dark",
+    "darkThemeToggler":"false",
+    "editLinkBase":"https://github.com/QuintenMadari/yiqizuozuoye/src/main/",
+    "editLinkText":"编辑这篇文章 在 GitHub",
+    "nav":[
+            {
+                "title":"主页","link":"/"
+            },
+            {
+                "title":"关于","link":"/about"
+            }
+    ]
+}
