@@ -88,7 +88,7 @@ print(readable)
 
 docutescript = 'new Docute(XXXXX)'.replace('XXXXX',replacement)
 
-f = open("./assets/script.js", "w")
+f = open("script.js", "w")
 f.write(docutescript)
 f.close()
 
