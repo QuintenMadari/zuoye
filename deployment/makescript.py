@@ -18,7 +18,6 @@ for foltitle in foldertitles:
 	folcontent = os.listdir(path+curfol)
 	sfolcontent = sorted(folcontent)
 	filelinks = [curfol+'/'+name for name in sfolcontent if name[-3:].lower() == ".md"]
-	print(filelinks)
 	## extract and clean file title from first line of markdownfile
 	filetitles = []
 	for flink in filelinks:
