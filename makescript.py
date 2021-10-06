@@ -43,17 +43,19 @@ for foltitle in foldertitles:
 	folderinfo.append(folcomplete)
 jsfolders = ','.join(folderinfo)
 
+#variable part of json
 #sidebar collection: wrap around appended folders
 
-jsidebar = json.dumps(
+jdynamic = json.dumps(
 	{
+		'sourcePath':path,
 		'sidebar':[jsfolders]
 	}
 )
 
-#combine jhead to jsidebar
+#combine into static json
 
-jhead = json.dumps(
+jstatic = json.dumps(
 	{
 		'title':'作业',
 		'target':'#docute',
@@ -61,31 +63,30 @@ jhead = json.dumps(
 		'darkThemeToggler':'false',
 		'editLinkBase':'https://github.com/QuintenMadari/yiqizuozuoye/src/main/',
 		'editLinkText':'编辑这篇文章 在 GitHub',
-		'sourcePath':path,
 		'nav':[
 				{
-					'title':'Home','link':'/'
+					'title':'主页','link':'/'
 				},
 				{
-					'title':'About','link':'/README2'
+					'title':'关于','link':'/about'
 				}
 		]
 	}
 )
 
-dictA = json.loads(jhead)
-dictB = json.loads(jsidebar)
+dictA = json.loads(jstatic)
+dictB = json.loads(jdynamic)
 jscomplete = dictA.copy()
 jscomplete.update(dictB)
 
-#also clean up the json from errant backslashes and double quotes
-
+#clean up the json from errant backslashes and double quotes
 replacement = json.dumps(jscomplete).replace('\\"','"').replace('["','[').replace('"]',']').replace('\\\\u','\\u')
 
-#wrap new docute and write to script.js
+#pretty print the final json for debugging
 readable = json.dumps(json.loads(replacement),indent=4)
 print(readable)
 
+#wrap new docute and write to script.js
 docutescript = 'new Docute(XXXXX)'.replace('XXXXX',replacement)
 
 f = open("script.js", "w")
