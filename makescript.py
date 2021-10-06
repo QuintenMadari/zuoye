@@ -1,7 +1,7 @@
 import json
 import os
 
-path = 'CC201'
+path = './CC201'
 
 # get array of folder titles
 foldertitles = [name for name in os.listdir(path) if os.path.isdir(os.path.join(path,name))]
@@ -58,8 +58,10 @@ jhead = json.dumps(
 		'title':'作业',
 		'target':'#docute',
 		'theme':'dark',
-		'darkThemeToggler':'true',
-		'sourcePath':'./CC201',
+		'darkThemeToggler':'false',
+		'editLinkBase':'https://github.com/QuintenMadari/yiqizuozuoye/src/main/',
+		'editLinkText':'编辑这篇文章 在 GitHub',
+		'sourcePath':path,
 		'nav':[
 				{
 					'title':'Home','link':'/'
@@ -76,17 +78,21 @@ dictB = json.loads(jsidebar)
 jscomplete = dictA.copy()
 jscomplete.update(dictB)
 
-#wrap new docute and write to script.js
 #also clean up the json from errant backslashes and double quotes
 
-docutescript = 'new Docute(XXXXX)'
-docutescript = docutescript.replace('XXXXX',json.dumps(jscomplete).replace('\\"','"').replace('["','[').replace('"]',']').replace('\\\\u','\\u'))
-print(docutescript)
+replacement = json.dumps(jscomplete).replace('\\"','"').replace('["','[').replace('"]',']').replace('\\\\u','\\u')
 
-f = open("script.js", "w")
+#wrap new docute and write to script.js
+readable = json.dumps(json.loads(replacement),indent=4)
+print(readable)
+
+docutescript = 'new Docute(XXXXX)'.replace('XXXXX',replacement)
+
+f = open("./assets/script.js", "w")
 f.write(docutescript)
 f.close()
 
 #f = open("script.js", "r")
 #print(f.read())
 #f.close()
+
