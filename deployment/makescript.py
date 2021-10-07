@@ -4,11 +4,11 @@ import os
 # open config
 print(os.getcwd())
 config = open('./deployment/config.json', "r")
-dictStatic = json.loads(config.read())
+confstatic = json.loads(config.read())
 config.close()
 
 # get path and array of folder titles
-path = dictStatic['sourcePath']
+path = confstatic['sourcePath']
 foldertitles = [name for name in os.listdir(path) if os.path.isdir(os.path.join(path,name))]
 
 # get array of file paths only if ends in ".md"
@@ -27,40 +27,31 @@ for foltitle in foldertitles:
 		filetitles.append(rmhash)
 	linkinfo = []
 	for i in range(len(filelinks)):
-		ln = json.dumps(
-			{
-			'title':filetitles[i],'link':filelinks[i]
-			}
-		)
+	## manualjsonify
+		ln = "{\"title\":\""+filetitles[i]+"\",\"link\":\""+filelinks[i]+"\"}"
 		linkinfo.append(ln)
-	## comma join of json dumps of link info (stringified json)
+	## comma join link info (stringified json)
 	jslinks = ','.join(linkinfo)
 	## wrap folder/guide title around jslinks
-	folwraptemplate = json.dumps( { 'title':foltitle,'links':['XXXXXXXXXX'] } )
+	folwraptemplate = "{ \"title\":\""+foltitle+"\",\"links\":[XXXXXXXXXX] }"
 	folcomplete = folwraptemplate.replace('XXXXXXXXXX',jslinks)
 	folderinfo.append(folcomplete)
 
-# end of loop through files/folders. joining all info
-jsfolders = ','.join(folderinfo)
-
+# end of loop through files/folders. gather all info
+jsfolders = [json.loads(folderi) for folderi in folderinfo]
 # create variable part of final json
-jdynamic = json.dumps( { 'sidebar':[jsfolders] } )
+dynamic =  {'sidebar':jsfolders }
 # > currently only to fill sidebar ToC with folder info
 
-# combine dynamic into static config dict and turn into final json
-dictDynamic = json.loads(jdynamic)
-jscomplete = dictStatic.copy()
-jscomplete.update(dictDynamic)
+completeconf = confstatic.copy()
+completeconf.update(dynamic)
 
-# clean up the json from errant backslashes and double quotes (caused by json dump)
-replacement = json.dumps(jscomplete).replace('\\"','"').replace('["','[').replace('"]',']').replace('\\\\u','\\u')
-
-# pretty print the final json for debugging/visual inspection
-readable = json.dumps(json.loads(replacement),indent=4)
-print(readable)
+stringjson = json.dumps(completeconf,ensure_ascii=False).encode('utf8')
+readable = json.dumps(completeconf,ensure_ascii=False,indent=4).encode('utf8')
+print(readable.decode())
 
 # wrap in new vue docute element and write to script
-docutescript = 'new Docute(XXXXX)'.replace('XXXXX',replacement)
+docutescript = 'new Docute(XXXXX)'.replace('XXXXX',stringjson.decode())
 newscript = open("./assets/script.js", "w")
 newscript.write(docutescript)
 newscript.close()
