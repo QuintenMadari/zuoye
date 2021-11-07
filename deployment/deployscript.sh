@@ -30,7 +30,11 @@ WEBDOCUMENTROOT="/var/www/html/zuoye/"
 cd $REPOROOT
 
 # submodules initiele pull
-git submodule update --init --recursive --remote
+cd CC201
+git checkout main
+git pull -f
+cd ..
+#git submodule update --init --recursive --remote
 ## > init eigk niet elke keer nodig, alleen 1e keer na clonen main repo
 ## > recursive pakt meteen elke submodule van de repo (.gitmodules)
 ## > remote zorgt voor het gaan naar de uiterste tip van de sub repo
